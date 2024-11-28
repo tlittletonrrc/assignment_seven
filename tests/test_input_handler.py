@@ -1,4 +1,5 @@
-"""REQUIRED MODULE DOCUMENTATION
+"""This module is for making and running tests to test the input_handler module.
+To be able to run the tests use this command in the terminal.
 python3 -m unittest tests/test_input_handler.py
 """
 

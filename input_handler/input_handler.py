@@ -1,4 +1,5 @@
-"""REQUIRED MODULE DOCUMENTATION
+"""This module is for getting the file format then putting that file if it is
+a csv or a json and put it into a dictionary.
 """
 
 __author__ = "Thomas Littleton"
