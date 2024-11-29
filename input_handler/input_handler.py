@@ -1,35 +1,48 @@
-"""REQUIRED MODULE DOCUMENTATION
+"""This module is for getting the file format then putting that file if it is
+a csv or a json and put it into a dictionary.
 """
 
-__author__ = ""
-__version__ = ""
+__author__ = "Thomas Littleton"
+__version__ = "1.0."
 
 import csv
 import json
 from os import path
 
 class InputHandler:
-    """REQUIRED: CLASS DOCSTRING
+    """This class is for valadation for the input of the files which is the input.
     """
 
     def __init__(self, file_path: str):
-        """REQUIRED: METHOD DOCSTRING
+        """Initializes a new instance of the InputHandler class.
         """
         self.__file_path = file_path
 
     @property
     def file_path(self) -> str:
-        """REQUIRED: METHOD DOCSTRING
+        """Gets the file path of the InputHandler.
+
+        Returns:
+            __file_path: The file path of the InputHandler.
         """
         return self.__file_path
 
     def get_file_format(self) -> str:
-        """REQUIRED: METHOD DOCSTRING
+        """Gets the file path of the InputHandler.
+
+        Returns:
+            __file_path.split: The file path formated of the InputHandler.
         """
         return self.__file_path.split(".")[-1]
 
     def read_input_data(self) -> list:
-        """REQUIRED: METHOD DOCSTRING
+        """Reads the file and put it into a variable.
+        
+        It checks to see it is a csv or a json file then reads that file into
+        a variable then returns that variable.
+
+        Returns:
+            transactions: the variable that holds the file.
         """
         transactions = []
         file_format = self.get_file_format()
@@ -41,7 +54,10 @@ class InputHandler:
         return transactions
 
     def read_csv_data(self) -> list:
-        """REQUIRED: METHOD DOCSTRING
+        """Reads the file and put it into a variable.
+        
+        Returns:
+            transactions: the variable that holds the file.
         """
         if not path.isfile(self.__file_path):
             raise FileNotFoundError(f"File: {self.__file_path} does not exist.")
@@ -56,7 +72,10 @@ class InputHandler:
         return transactions
             
     def read_json_data(self) -> list:
-        """REQUIRED: METHOD DOCSTRING
+        """Reads the file and put it into a variable.
+        
+        Returns:
+            transactions: the variable that holds the file.
         """
         # Research the json.load function so that you 
         # understand the format of the data once it is

@@ -1,8 +1,9 @@
-"""REQUIRED MODULE DOCUMENTATION
+"""This module is where everything comes together to make it run and work
+all together.
 """
 
-__author__ = ""
-__version__ = ""
+__author__ = "Thomas Littleton, Karmjeet Kaur, Sandeep Kaur"
+__version__ = "1.0."
 
 from os import path
 from input_handler.input_handler import InputHandler
