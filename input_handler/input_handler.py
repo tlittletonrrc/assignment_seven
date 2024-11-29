@@ -10,7 +10,7 @@ import json
 from os import path
 
 class InputHandler:
-    """This class is for valadation for the input of the files which is the input.
+    """This class is for validation for the input of the files which is the input.
     """
 
     def __init__(self, file_path: str):
@@ -31,7 +31,7 @@ class InputHandler:
         """Gets the file path of the InputHandler.
 
         Returns:
-            __file_path.split: The file path formated of the InputHandler.
+            __file_path.split: The file path formatted of the InputHandler.
         """
         return self.__file_path.split(".")[-1]
 
