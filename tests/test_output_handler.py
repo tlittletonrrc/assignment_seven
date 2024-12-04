@@ -169,5 +169,61 @@ class TestOutputHandler(TestCase):
         self.assertEqual(mock_file().write.call_count, expected_calls)
 
 
+    @patch('builtins.open', new_callable=mock_open)
+    def test_filter_account_summaries_greater_than(self, mock_file):
+        """Test filtering account summaries with greater than or equal mode."""
+        # Arrange
+        handler = OutputHandler(
+            self.account_summaries,
+            self.suspicious_transactions,
+            self.transaction_statistics
+        )
+
+        # Act
+        filtered_data = handler.filter_account_summaries("balance", 100, True)
+
+        # Assert
+        self.assertEqual(len(filtered_data), 1)
+        self.assertEqual(filtered_data[0]["balance"], 200)
+        self.assertEqual(filtered_data[0]["account_number"], "1002")
+
+    @patch('builtins.open', new_callable=mock_open)
+    def test_filter_account_summaries_less_than(self, mock_file):
+        """Test filtering account summaries with less than or equal mode."""
+        # Arrange
+        handler = OutputHandler(
+            self.account_summaries,
+            self.suspicious_transactions,
+            self.transaction_statistics
+        )
+
+        # Act
+        filtered_data = handler.filter_account_summaries("balance", 100, False)
+
+        # Assert
+        self.assertEqual(len(filtered_data), 1)
+        self.assertEqual(filtered_data[0]["balance"], 50)
+        self.assertEqual(filtered_data[0]["account_number"], "1001")
+
+    @patch('builtins.open', new_callable=mock_open)
+    def test_write_filtered_summaries_to_csv(self, mock_file):
+        """Test writing filtered summaries to CSV file."""
+        # Arrange
+        handler = OutputHandler(
+            self.account_summaries,
+            self.suspicious_transactions,
+            self.transaction_statistics
+        )
+        filtered_data = handler.filter_account_summaries("balance", 100, True)
+
+        # Act
+        handler.write_filtered_summaries_to_csv(filtered_data, 'filtered_test.csv')
+
+        # Assert
+        mock_file.assert_called_once_with('filtered_test.csv', 'w', newline='')
+        expected_calls = len(filtered_data) + 1  # data rows + header
+        self.assertEqual(mock_file().write.call_count, expected_calls)
+
+
 if __name__ == "__main__":
     main()

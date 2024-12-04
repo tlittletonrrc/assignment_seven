@@ -146,3 +146,54 @@ class OutputHandler:
                     statistic["total_amount"],
                     statistic["transaction_count"]
                 ])
+
+    def filter_account_summaries(self, filter_field: str, filter_value: int, filter_mode: bool) -> list:
+        """Filter account summaries based on specified criteria.
+        
+        Args:
+            filter_field: Field to filter on ('balance', 'total_deposits', or 'total_withdrawals')
+            filter_value: Value to compare against
+            filter_mode: True for >= comparison, False for <= comparison
+        
+        Returns:
+            List of filtered account summaries
+        """
+        filtered_data = []
+        
+        for account_number, summary in self.__account_summaries.items():
+            field_value = summary[filter_field]
+            
+            if filter_mode and field_value >= filter_value:
+                filtered_summary = summary.copy()
+                filtered_summary['account_number'] = account_number
+                filtered_data.append(filtered_summary)
+            elif not filter_mode and field_value <= filter_value:
+                filtered_summary = summary.copy()
+                filtered_summary['account_number'] = account_number
+                filtered_data.append(filtered_summary)
+                
+        return filtered_data
+
+    def write_filtered_summaries_to_csv(self, filtered_data: list, file_path: str) -> None:
+        """Write filtered account summaries to a CSV file.
+        
+        Args:
+            filtered_data: List of filtered account summaries
+            file_path: Location where CSV file will be created
+        """
+        with open(file_path, "w", newline="") as output_file:
+            writer = csv.writer(output_file)
+            writer.writerow([
+                "Account number",
+                "Balance",
+                "Total Deposits",
+                "Total Withdrawals"
+            ])
+            
+            for summary in filtered_data:
+                writer.writerow([
+                    summary["account_number"],
+                    summary["balance"],
+                    summary["total_deposits"],
+                    summary["total_withdrawals"]
+                ])
