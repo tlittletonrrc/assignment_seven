@@ -4,7 +4,7 @@
  filter data based on specific account requirements.
 """
 
-__author__ = "Karmjeet Kaur"
+__author__ = "Thomas Littleton, Karmjeet Kaur, Sandeep Kaur"
 __version__ = "1.0."
 
 from os import path
