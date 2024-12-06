@@ -68,3 +68,30 @@ class InputHandler:
             transactions = json.load(input_file)
 
         return transactions
+
+    def data_validation(self) -> list:
+        """checks to see if the amount or the transaction type
+        is a valid value. ex if amount is less then 0.
+        
+        Args:
+            transaction (list): The list of all transactions.
+            valid_transaction (list): The list of all valid
+            transactions.
+
+        Returns:
+            valid_transaction: A list of all valid transactions.
+        """
+        transaction = self.read_input_data()
+        valid_transaction = []
+
+        for transactions in transaction:
+
+            if isinstance(transactions["Amount"], (int, float)):
+                amount = int(transactions["Amount"])
+                if amount > 0:
+                    transaction_type = ["deposit", "withdrawal", "transfer"]
+                    if transactions["Transaction type"] in transaction_type:
+                        valid_transaction.append(transactions)
+
+        return valid_transaction
+    
