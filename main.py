@@ -2,6 +2,12 @@
  processing application. It handles the tasks of reading, 
  processing, and displaying financial transaction data, and it also has features to
  filter data based on specific account requirements.
+
+Key Functions:
+- Reads transaction data from CSV files
+- Processes financial records for analysis
+- Generates detailed reports and statistics
+- Logs processing activities and important events
 """
 
 __author__ = "Thomas Littleton, Karmjeet Kaur, Sandeep Kaur"
@@ -34,7 +40,16 @@ def main() -> None:
     input_handler = InputHandler(input_file_path)
     transactions = input_handler.read_input_data()
 
-    data_processor = DataProcessor(transactions)
+    # Create log file path
+    log_file_path = path.join(current_directory, "output/fdp_team_1.log")  # Replace 1 with your team number
+
+    # Initialize DataProcessor with logging configuration
+
+    data_processor = DataProcessor(transactions,
+    logging_level="INFO",
+        logging_format="%(asctime)s - %(levelname)s - %(message)s",
+        log_file=log_file_path
+    )
     processed_data = data_processor.process_data()
 
 

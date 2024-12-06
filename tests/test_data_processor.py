@@ -13,6 +13,7 @@ __version__ = "1.0."
 
 import unittest
 from unittest import TestCase
+import logging
 from data_processor.data_processor import DataProcessor
 
 class TestDataProcessor(TestCase):
@@ -141,6 +142,34 @@ def test_update_transaction_statistics(self):
         
         self.assertEqual(stats["total_amount"], 3000)
         self.assertEqual(stats["transaction_count"], 1)
+
+def test_logging_functionality(self):
+        """Test that logging messages are generated correctly."""
+        processor = DataProcessor([], logging_level="INFO")
+        
+        test_transaction = {
+            "Transaction ID": "9",
+            "Account number": "1009",
+            "Transaction type": "deposit",
+            "Amount": 15000,  # Large amount to trigger suspicious transaction
+            "Currency": "CAD"
+        }
+
+        # Use assertLogs to capture and verify logging output
+        with self.assertLogs(level='INFO') as log:
+            processor.update_account_summary(test_transaction)
+            processor.check_suspicious_transactions(test_transaction)
+            processor.update_transaction_statistics(test_transaction)
+
+            # Verify the expected number of log messages
+            self.assertEqual(len(log.records), 3)
+            
+            # Verify specific log messages
+            self.assertIn(f"Account summary updated: {test_transaction['Account number']}", 
+                         log.output[0])
+            self.assertIn("Suspicious transaction:", log.output[1])
+            self.assertIn(f"Updated transaction statistics for: {test_transaction['Transaction type']}", 
+                         log.output[2])
 
 if __name__ == "__main__":
     unittest.main()
