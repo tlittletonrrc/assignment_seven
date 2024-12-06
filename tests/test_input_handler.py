@@ -35,11 +35,40 @@ class InputHandlerTests(TestCase):
         # with an amount that is not a numeric type (int or float).
 
         # Arrange
-        file_path = "C:/assignment_seven/input/test_not_numeric.json"
+        file_path = "/input/test_not_numeric.json"
 
         # Act
+        file = [
+                {
+                    "Transaction ID": 1,
+                    "Account number": 1002,
+                    "Date": "2023-03-01",
+                    "Transaction type": "deposit",
+                    "Amount": "a",
+                    "Currency": "CAD",
+                    "Description": "Salary"
+                },
+                {
+                    "Transaction ID": 2,
+                    "Account number": 1002,
+                    "Date": "2023-03-01",
+                    "Transaction type": "deposit",
+                    "Amount": 1800,
+                    "Currency": "CAD",
+                    "Description": "Salary"
+                },
+                {
+                    "Transaction ID": 3,
+                    "Account number": 1001,
+                    "Date": "2023-03-02",
+                    "Transaction type": "withdrawal",
+                    "Amount": 300,
+                    "Currency": "CAD",
+                    "Description": "Groceries"
+                }
+                ]
         input = InputHandler(file_path)
-        actual = input.data_validation()
+        actual = input.data_validation(file)
 
         # Assert
         expected = [
@@ -72,8 +101,37 @@ class InputHandlerTests(TestCase):
         file_path = "input/test_less_then_zero.json"
 
         # Act
+        file = [
+                {
+                    "Transaction ID": 1,
+                    "Account number": 1002,
+                    "Date": "2023-03-01",
+                    "Transaction type": "deposit",
+                    "Amount": -1800,
+                    "Currency": "CAD",
+                    "Description": "Salary"
+                },
+                {
+                    "Transaction ID": 2,
+                    "Account number": 1002,
+                    "Date": "2023-03-01",
+                    "Transaction type": "deposit",
+                    "Amount": 1800,
+                    "Currency": "CAD",
+                    "Description": "Salary"
+                },
+                {
+                    "Transaction ID": 3,
+                    "Account number": 1001,
+                    "Date": "2023-03-02",
+                    "Transaction type": "withdrawal",
+                    "Amount": 300,
+                    "Currency": "CAD",
+                    "Description": "Groceries"
+                }
+                ]
         input = InputHandler(file_path)
-        actual = input.data_validation()
+        actual = input.data_validation(file)
 
         # Assert
         expected = [
@@ -105,8 +163,37 @@ class InputHandlerTests(TestCase):
         file_path = "input/test_invalid_transaction_type.json"
 
         # Act
+        file = [
+                {
+                    "Transaction ID": 1,
+                    "Account number": 1002,
+                    "Date": "2023-03-01",
+                    "Transaction type": "a",
+                    "Amount": 1800,
+                    "Currency": "CAD",
+                    "Description": "Salary"
+                },
+                {
+                    "Transaction ID": 2,
+                    "Account number": 1002,
+                    "Date": "2023-03-01",
+                    "Transaction type": "deposit",
+                    "Amount": 1800,
+                    "Currency": "CAD",
+                    "Description": "Salary"
+                },
+                {
+                    "Transaction ID": 3,
+                    "Account number": 1001,
+                    "Date": "2023-03-02",
+                    "Transaction type": "withdrawal",
+                    "Amount": 300,
+                    "Currency": "CAD",
+                    "Description": "Groceries"
+                }
+                ]
         input = InputHandler(file_path)
-        actual = input.data_validation()
+        actual = input.data_validation(file)
 
         # Assert
         expected = [

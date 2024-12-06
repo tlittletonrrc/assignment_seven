@@ -38,6 +38,8 @@ class InputHandler:
             transactions =  self.read_csv_data()
         elif file_format == "json":
             transactions = self.read_json_data()
+        
+        transactions = self.data_validation(transactions)
         return transactions
 
     def read_csv_data(self) -> list:
@@ -69,7 +71,7 @@ class InputHandler:
 
         return transactions
 
-    def data_validation(self) -> list:
+    def data_validation(self, file_transaction) -> list:
         """checks to see if the amount or the transaction type
         is a valid value. ex if amount is less then 0.
         
@@ -81,7 +83,7 @@ class InputHandler:
         Returns:
             valid_transaction: A list of all valid transactions.
         """
-        transaction = self.read_input_data()
+        transaction = file_transaction
         valid_transaction = []
 
         for transactions in transaction:
