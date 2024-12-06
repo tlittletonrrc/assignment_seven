@@ -1,8 +1,11 @@
-"""REQUIRED MODULE DOCUMENTATION
+"""This module is the starting point for the financial data
+ processing application. It handles the tasks of reading, 
+ processing, and displaying financial transaction data, and it also has features to
+ filter data based on specific account requirements.
 """
 
-__author__ = ""
-__version__ = ""
+__author__ = "Thomas Littleton, Karmjeet Kaur, Sandeep Kaur"
+__version__ = "1.0."
 
 from os import path
 from input_handler.input_handler import InputHandler
@@ -17,6 +20,8 @@ def main() -> None:
     - Processes the data using DataProcessor.
     - Writes the processed data to CSV and JSON files using 
     OutputHandler.
+    -  Filters account summaries based on specified criteria.
+    - Exports filtered data to a separate CSV file.
     """
 
     # Retrieves the directory name of the current script or module file.
@@ -59,6 +64,20 @@ def main() -> None:
     output_handler.write_account_summaries_to_csv(file_path["account_summaries"])
     output_handler.write_suspicious_transactions_to_csv(file_path["suspicious_transactions"])
     output_handler.write_transaction_statistics_to_csv(file_path["transaction_statistics"])
+
+# Add filtering functionality here
+    filtered_filename = "fdp_filter_team_1.csv"  # Replace 1 with your team number
+    file_path["filtered_accounts"] = path.join(current_directory,
+                                             f"output/{filtered_filename}")
+
+    # Apply filtering to identify high-value accounts (balance >= 5000)
+    filtered_accounts = output_handler.filter_account_summaries("balance", 5000, True)
+
+    # Write filtered results to CSV
+    output_handler.write_filtered_summaries_to_csv(
+        filtered_accounts, 
+        file_path["filtered_accounts"]
+    )
 
 if __name__ == "__main__":
     main()
