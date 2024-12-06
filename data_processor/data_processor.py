@@ -5,8 +5,12 @@ This module provides functionality for processing financial transaction data,
 including account tracking, suspicious activity detection, and statistical analysis.
 """
 
+import logging
 __author__ = "sandeep kaur"
 __version__ = "1.0."
+
+import logging
+
 
 class DataProcessor:
     """
@@ -29,17 +33,34 @@ class DataProcessor:
     List of currency codes considered uncommon or high-risk.
     """
 
-    def __init__(self, transactions: list):
+    def __init__(self, transactions: list,logging_level: str = "WARNING",
+                 logging_format: str = "%(asctime)s - %(levelname)s - %(message)s",
+                 log_file:str=""
+                 ):
         """
         Initialize the processor with transaction data.
         
         Args:
             transactions: List of transaction dictionaries to process
-        """
+            logging_level: The level of severity for logging (default: WARNING)
+            logging_format: Format string for log messages (default: timestamp-level-message format)
+            log_file: File path for log output (default: empty string for console output)
+            """
         self.__transactions = transactions
         self.__account_summaries = {}
         self.__suspicious_transactions = []
         self.__transaction_statistics = {}
+
+
+# Configure logging
+        numeric_level = getattr(logging, logging_level.upper())
+        if log_file:
+            logging.basicConfig(filename=log_file, 
+                              level=numeric_level,
+                              format=logging_format)
+        else:
+            logging.basicConfig(level=numeric_level,
+                              format=logging_format)
 
     @property
     def input_data(self) -> list:

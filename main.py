@@ -1,8 +1,18 @@
-"""REQUIRED MODULE DOCUMENTATION
+"""
+Financial Data Processing Application
+
+This module serves as the main entry point for the financial transaction processing system.
+It coordinates the workflow between input handling, data processing, and output generation.
+
+Key Functions:
+- Reads transaction data from CSV files
+- Processes financial records for analysis
+- Generates detailed reports and statistics
+- Logs processing activities and important events
 """
 
-__author__ = ""
-__version__ = ""
+__author__ = "Sandeep kaur"
+__version__ = "1.0."
 
 from os import path
 from input_handler.input_handler import InputHandler
@@ -29,7 +39,16 @@ def main() -> None:
     input_handler = InputHandler(input_file_path)
     transactions = input_handler.read_input_data()
 
-    data_processor = DataProcessor(transactions)
+    # Create log file path
+    log_file_path = path.join(current_directory, "output/fdp_team_1.log")  # Replace 1 with your team number
+
+    # Initialize DataProcessor with logging configuration
+
+    data_processor = DataProcessor(transactions,
+    logging_level="INFO",
+        logging_format="%(asctime)s - %(levelname)s - %(message)s",
+        log_file=log_file_path
+    )
     processed_data = data_processor.process_data()
 
 
