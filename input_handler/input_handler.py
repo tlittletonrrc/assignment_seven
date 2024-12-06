@@ -106,13 +106,19 @@ class InputHandler:
         valid_transaction = []
 
         for transactions in transaction:
-
-            if isinstance(transactions["Amount"], (int, float)):
-                amount = int(transactions["Amount"])
-                if amount > 0:
+            amount = transactions["Amount"]
+            is_a_digit = False
+            try:
+                amount = float(transactions["Amount"])
+                is_a_digit = True
+            except ValueError:
+                is_a_digit = False
+                
+            if is_a_digit:
+                if amount > 0: 
                     transaction_type = ["deposit", "withdrawal", "transfer"]
                     if transactions["Transaction type"] in transaction_type:
                         valid_transaction.append(transactions)
-
+                        
         return valid_transaction
     
